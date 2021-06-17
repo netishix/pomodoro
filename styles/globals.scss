@@ -1,0 +1,9 @@
+// Override Bootstrap variables
+$primary: #c63535;
+$info: #689cd9;
+// Import Bootstrap Icons
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+// Import Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap';
+// Import Animate.css
+@import '../node_modules/animate.css/animate.min.css';

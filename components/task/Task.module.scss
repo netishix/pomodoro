@@ -1,0 +1,13 @@
+
+.tomato {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url('../../public/icons/tomato-filled.png') no-repeat;
+  background-size: contain;
+}
+
+.finishedTask {
+  border-left: 3px solid #56aa56;
+  background-color: #e5efe5;
+}
