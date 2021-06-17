@@ -45,7 +45,7 @@ export default function Home() {
       </Head>
       <main className="container">
         <div className="row justify-content-center">
-          <div className="col-10 col-md-5">
+          <div className="col-11 order-1 col-md-11 order-lg-0 col-lg-6 col-xxl-6 mb-5">
             <div className="row mb-3">
               <div className="col-12">
                 {!state.isLoading && <Settings settings={state.settings}/>}
@@ -57,7 +57,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="col-8 offset-md-1 col-md-6 offset-lg-2 col-lg-4">
+          <div className="col-11 order-0 col-md-9 order-lg-1 offset-lg-1 col-lg-5 offset-xxl-2 col-xl-4 mb-5">
             {!state.isLoading && <Tomato status={state.status} />}
           </div>
         </div>
