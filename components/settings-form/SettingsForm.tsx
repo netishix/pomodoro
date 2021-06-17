@@ -58,36 +58,8 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
     }
   }, [soundId]);
 
-  // function handleValueChange (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-  //   const { name, value } = e.target;
-  //   const newFormValue = {...form.value, [name]: value};
-  //   setForm({...form, value: newFormValue});
-  // }
-  //
-  // function handleSubmit(e: FormEvent) {
-  //   e.preventDefault();
-  //   const { pomodoroMinutes, shortBreakMinutes, longBreakMinutes, soundId } = form.value;
-  //   if (pomodoroMinutes !== '' && shortBreakMinutes != '' && longBreakMinutes != '') {
-  //     const newSettings: ISettings = {
-  //       pomodoroMinutes: parseInt(pomodoroMinutes),
-  //       shortBreakMinutes: parseInt(shortBreakMinutes),
-  //       longBreakMinutes: parseInt(longBreakMinutes),
-  //       soundId: parseInt(soundId),
-  //     };
-  //     // Persist new settings
-  //     connectorRef.current.saveSettings(newSettings);
-  //     // Reset form
-  //     setForm(initialState);
-  //     onCancel();
-  //   } else {
-  //     // Update state with an error
-  //     setForm({ ...form, errors: { time: 'Please complete all the fields'} });
-  //   }
-  // }
-
-
   return (
-    <div className="row border-top mt-3 p-2 pt-4">
+    <div className="row border-top mt-3 p-2 pt-4 animate__animated animate__fadeIn">
       <form className="col-12" onSubmit={handleSubmit(submit)}>
         <div className="row form-group mb-3">
           <div className="col-12">
