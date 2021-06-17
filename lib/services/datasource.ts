@@ -2,9 +2,10 @@ import { BrowserDatasource } from "./browser-datasource";
 import { DatasourceConnector } from "../../interfaces/datasource-connector.interface";
 import { DEFAULT_DATASOURCE } from "../constants";
 
+
 export class Datasource {
 
-  private readonly connector: DatasourceConnector | null;
+  private readonly connector: DatasourceConnector;
 
   constructor() {
     switch (DEFAULT_DATASOURCE) {
@@ -13,12 +14,11 @@ export class Datasource {
         this.connector = browserDatasource;
         break;
       default:
-        this.connector = null;
         throw new Error(`The configured datasource ${DEFAULT_DATASOURCE} is not supported`);
     }
   }
 
-  public getConnector(): DatasourceConnector {
+  public getConnector(): DatasourceConnector{
     return this.connector;
   }
 

@@ -1,8 +1,9 @@
+import { AppProps } from 'next/app';
+import dynamic from "next/dynamic";
 import '../styles/globals.scss'
 import { Layout } from "../components";
-import dynamic from "next/dynamic";
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps }: AppProps) {
 
   return (
     <Layout>
@@ -11,8 +12,4 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default dynamic(() => Promise.resolve(App), {
-  ssr: false,
-});
-
-// export default App
+export default App
