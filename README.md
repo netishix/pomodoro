@@ -10,7 +10,8 @@ Check the [live demo](https://netishix-pomodoro.herokuapp.com/).
 
 1. Install dependencies with npm. ```npm install```
 2. Generate a build. ```npm run build```
-2. Run the app. ```npm start```
+3. Define the ```$PORT``` variable in your environment.
+4. Run the app. ```npm start```
 
 ## NextJS pages
 
