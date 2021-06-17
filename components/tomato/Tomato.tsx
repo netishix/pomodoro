@@ -8,7 +8,6 @@ import {
 } from "../../lib/constants";
 import {useEffect, useRef, useState} from "react";
 import {IStatus} from "../../interfaces/models/status.interface";
-import {Head} from "next/document";
 
 type State = IStatus;
 
@@ -79,12 +78,13 @@ export default function Tomato({status}: Props) {
           <button type="button" className={`btn btn-outline-success shadow-none ${state.mode === 'longBreak' ? 'active' : ''}`} onClick={() => changeMode('longBreak')}>Long Break</button>
         </div>
       </div>
-      <div className="position-relative animate__animated animate__bounce">
-        <img className="img-fluid" src={state.mode === 'pomodoro' ? '/images/tomato.png' : '/images/tomato-green.png'} />
-        <div id={styles.timer}>
+      <div className="position-relative animate__animated animate__bounce animate__repeat-2">
+        <img className={`img-fluid ${state.mode !== 'pomodoro' ? 'visually-hidden' : ''}`} src="/images/tomato.png" />
+        <img className={`img-fluid ${(state.mode !== 'shortBreak' && state.mode !== 'longBreak') ? 'visually-hidden' : ''}`} src="/images/tomato-green.png" />
+        <div id={styles.timer} className="animate__animated animate__fadeIn animate__delay-1s">
           <span className="text-white">{timerRef.current.getTimeValues().toString()}</span>
         </div>
-        <div id={styles.controllerBtn}>
+        <div id={styles.controllerBtn} className="animate__animated animate__fadeIn animate__delay-1s">
           {
             !state.started ?
               <button className={`btn btn-light fw-bold ${state.mode === 'pomodoro' ? 'text-danger' : 'text-success'}`} onClick={startTimer}>
