@@ -1,34 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pomodoro
 
-## Getting Started
+This repository holds a time management App that uses the Pomodoro technique. It is built with ```Typescript```, ```NextJS```, ```Bootstrap 5``` and ```Sass```.
 
-First, run the development server:
+Currently, pre-rendering with NextJS has been disabled temporarily because the App uses LocalStorage as the main datasource.
+This will change in future releases.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Check the [live demo](https://netishix-pomodoro.herokuapp.com/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Dev Installation
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies with npm. ```npm install```
+2. Run the app in dev mode. ```npm run dev```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## NextJS pages
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+The app contains the following pages:
+* ```/``` - Main App
 
-## Learn More
+## Linting
 
-To learn more about Next.js, take a look at the following resources:
+At the moment no linting tool has been installed. Linting may be provided by ```eslint``` and ```@typescript-eslint/parser``` 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Versioning
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This repository is versioned using [SemVer (Semantic Versioning)](https://semver.org/) and commits are formatted by using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
-## Deploy on Vercel
+## Testing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+At the moment the app has not been tested. 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Author
+
+Nahuel Vazquez [(@netishix)](https://www.github.com/netishix)
