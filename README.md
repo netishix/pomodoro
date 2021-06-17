@@ -2,20 +2,20 @@
 
 This repository holds a time management App that uses the Pomodoro technique. It is built with ```Typescript```, ```NextJS```, ```Bootstrap 5``` and ```Sass```.
 
-Currently, pre-rendering with NextJS has been disabled temporarily because the App uses LocalStorage as the main datasource.
-This will change in future releases.
+The App uses LocalStorage as the main datasource. This will change in future releases.
 
 Check the [live demo](https://netishix-pomodoro.herokuapp.com/).
 
-## Dev Installation
+## Installation
 
 1. Install dependencies with npm. ```npm install```
-2. Run the app in dev mode. ```npm run dev```
+2. Generate a build. ```npm run build```
+2. Run the app. ```npm start```
 
 ## NextJS pages
 
 The app contains the following pages:
-* ```/``` - Main App
+* ```/``` - Home
 
 ## Linting
 
