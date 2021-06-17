@@ -1,0 +1,35 @@
+
+.defaultBackground {
+  background-color: #ece7e7;
+}
+.workingBackground {
+  background-color: red;
+}
+.breakBackground {
+ background-color: green;
+}
+
+#mainWrapper {
+  position: relative;
+  min-height: 100vh;
+  background-color: #ece7e7;
+}
+
+#content {
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+#header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
