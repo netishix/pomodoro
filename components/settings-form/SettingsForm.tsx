@@ -54,6 +54,9 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
         playingAudioRef.current.pause();
       }
       audio.play();
+      setTimeout(() => {
+        audio.pause();
+      }, 5000);
       playingAudioRef.current = audio;
     }
   }, [soundId]);
@@ -65,16 +68,16 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
           <div className="col-12">
             <h6 className="text-muted">Time (minutes)</h6>
           </div>
-          <div className="col-12 col-md-3 mb-2">
-            <label className="small text-muted">Pomodoro</label>
+          <div className="col-4 col-md-3 mb-2">
+            <label className="small text-muted text-truncate">Pomodoro</label>
             <input className="form-control form-control-sm text-center" {...register("pomodoroMinutes", { required: true, min: 1, max: 60 })} type="number"/>
           </div>
-          <div className="col-12 col-md-3 mb-2">
-            <label className="small text-muted">Short break</label>
+          <div className="col-4 col-md-3 mb-2">
+            <label className="small text-muted text-truncate">Short break</label>
             <input className="form-control form-control-sm text-center" {...register("shortBreakMinutes", { required: true, min: 1, max: 60 })} type="number"/>
           </div>
-          <div className="col-12 col-md-3 mb-2">
-            <label className="small text-muted">Long break</label>
+          <div className="col-4 col-md-3 mb-2">
+            <label className="small text-muted text-truncate">Long break</label>
             <input className="form-control form-control-sm text-center" {...register("longBreakMinutes", { required: true, min: 1, max: 60 })} type="number"/>
           </div>
           <div className="col-12">
@@ -92,8 +95,8 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
             }
           </div>
         </div>
-        <div className="row form-group">
-          <div className="col-12 col-md-4">
+        <div className="row form-group mb-3">
+          <div className="col-5 col-md-4">
             <label className="small text-muted">Alarm sound:</label>
             <select className="form-select form-select-sm" {...register("soundId", { required: true })}>
               {
