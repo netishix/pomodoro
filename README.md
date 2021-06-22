@@ -1,8 +1,8 @@
 # Pomodoro
 
-This repository holds a time management App that uses the Pomodoro technique. It is built with ```Typescript```, ```NextJS```, ```Bootstrap 5``` and ```Sass```.
+This repository holds a time management App that uses the Pomodoro technique. It is built with ```Typescript```, ```NextJS```, ```Redux```, ```Bootstrap 5``` and ```Sass```.
 
-The App uses LocalStorage as the main datasource. This will change in future releases.
+The App uses redux and LocalStorage as the main datasource. This will change in future releases.
 
 Check the [live demo](https://netishix-pomodoro.herokuapp.com/).
 
@@ -17,6 +17,12 @@ Check the [live demo](https://netishix-pomodoro.herokuapp.com/).
 
 The app contains the following pages:
 * ```/``` - Home
+
+## TODOs
+
+* When updating the timer settings, re render the tomato using the latest settings
+* When changing the alarm sound while the timer is running, unsubscribe from the timer 'targetAchieved' event
+* Integrate the tasks list feature with the timer
 
 ## Linting
 
