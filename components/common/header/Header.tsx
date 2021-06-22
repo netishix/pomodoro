@@ -1,3 +1,4 @@
+import {VERSION} from "../../../lib/constants";
 
 export default function Header() {
   return (
@@ -7,6 +8,9 @@ export default function Header() {
           <a className="navbar-brand" href="/">
             <span className="small fst-italic">Pomodoro</span>
           </a>
+          <span className="navbar-text">
+            {VERSION}
+          </span>
         </nav>
       </div>
     </header>
