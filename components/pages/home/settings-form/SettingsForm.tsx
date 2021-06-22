@@ -1,10 +1,8 @@
-import {AVAILABLE_SOUNDS} from "../../lib/constants";
-import {ISettings} from "../../interfaces/models/settings.interface";
-import {ChangeEvent, FormEvent, useEffect, useRef, useState} from "react";
-import {Datasource} from "../../lib/services/datasource";
-import {useForm, useWatch} from "react-hook-form";
-import {useComponentDidMount} from "../../lib/hooks/use-component-did-mount";
-
+import {AVAILABLE_SOUNDS} from "../../../../lib/constants";
+import {ISettings} from "../../../../lib/types/models";
+import {useEffect, useRef} from "react";
+import {useForm} from "react-hook-form";
+import {useComponentDidMount} from "../../../../lib/hooks/use-component-did-mount";
 
 interface FormData {
     pomodoroMinutes: string,
@@ -21,8 +19,6 @@ interface Props {
 
 export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
 
-
-  const connectorRef = useRef(new Datasource().getConnector());
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
       pomodoroMinutes: settings.pomodoroMinutes as unknown as string,
@@ -32,13 +28,12 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
     }
   });
   function submit(data: FormData) {
-    const newSettings = {
+    const newSettings: ISettings = {
       pomodoroMinutes: parseInt(data.pomodoroMinutes),
       shortBreakMinutes: parseInt(data.shortBreakMinutes),
       longBreakMinutes: parseInt(data.longBreakMinutes),
       soundId: parseInt(data.soundId),
     };
-    connectorRef.current.saveSettings(newSettings);
     onSubmit(newSettings);
   }
 

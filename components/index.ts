@@ -1,11 +1,11 @@
-import Header from './header/Header';
-import Footer from './footer/Footer';
-import Layout from './layout/Layout';
-import Tomato from './tomato/Tomato';
-import TaskList from "./task-list/TaskList";
-import TaskForm from './task-form/TaskForm';
-import Task from './task/Task';
-import Settings from './settings/Settings';
-import SettingsForm from "./settings-form/SettingsForm";
+import Header from './common/header/Header';
+import Footer from './common/footer/Footer';
+import Layout from './common/layout/Layout';
+import Tomato from './pages/home/tomato/Tomato';
+import TaskList from "./pages/home/task-list/TaskList";
+import TaskForm from './pages/home/task-form/TaskForm';
+import Task from './pages/home/task/Task';
+import Settings from './pages/home/settings/Settings';
+import SettingsForm from "./pages/home/settings-form/SettingsForm";
 
 export { Header, Footer, Layout, Tomato, TaskList, TaskForm, Task, Settings, SettingsForm };

@@ -1,4 +1,4 @@
-export interface ITask {
+export default interface ITask {
   id: string,
   title: string,
   iterations: number,

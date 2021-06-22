@@ -1,8 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import {ChangeEvent, FormEvent, useRef, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import styles from './TaskForm.module.scss';
-import {ITask} from "../../interfaces/models/task.interface";
-import {Datasource} from "../../lib/services/datasource";
+import {ITask} from "../../../../lib/types/models";
 
 interface State {
   isValid: boolean,
@@ -34,13 +33,11 @@ export default function TaskForm (props: Props) {
     }
   };
   const [form, setForm] = useState(initialState);
-  const connectorRef = useRef(new Datasource().getConnector());
-
 
   function updateHoveredIterations(total: number) {
     const value = {...form.value, hoveredIterations: total };
     setForm({...form, value});
-  };
+  }
 
   function selectIterations (total: number) {
     const value = {...form.value, iterations: total };
@@ -55,7 +52,7 @@ export default function TaskForm (props: Props) {
     const { name, value } = e.target;
     const newFormValue = {...form.value, [name]: value};
     setForm({...form, value: newFormValue});
-  };
+  }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -67,8 +64,6 @@ export default function TaskForm (props: Props) {
         iterations,
         finished: false,
       };
-      // Persist new task
-      connectorRef.current.createTask(newTask);
       // Reset form
       setForm(initialState);
       onSubmit(newTask);
@@ -76,7 +71,7 @@ export default function TaskForm (props: Props) {
       // Update state with an error
       setForm({ ...form, errors: { title: 'Please add a title for the task'} });
     }
-  };
+  }
 
   return (
     <form className="row animate__animated animate__fadeIn p-2" onSubmit={handleSubmit}>
