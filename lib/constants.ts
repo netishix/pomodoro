@@ -1,6 +1,6 @@
 import {IStatus, ISettings} from "./types/models";
 
-export const DEFAULT_DATASOURCE = 'browser';
+export const VERSION = 'v0.4.1';
 export const MODE_POMODORO_DEFAULT_MINUTES = 25;
 export const MODE_SHORT_BREAK_DEFAULT_MINUTES = 5;
 export const MODE_LONG_BREAK_DEFAULT_MINUTES = 15;
