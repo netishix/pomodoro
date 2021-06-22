@@ -1,22 +1,22 @@
-import {IStatus} from "../interfaces/models/status.interface";
-import {ISettings} from "../interfaces/models/settings.interface";
+import {IStatus, ISettings} from "./types/models";
 
 export const DEFAULT_DATASOURCE = 'browser';
-export const MODE_POMODORO_SECONDS = 25 * 60;
-export const MODE_SHORT_BREAK_SECONDS = 5 * 60;
-export const MODE_LONG_BREAK_SECONDS = 15 * 60;
+export const MODE_POMODORO_DEFAULT_MINUTES = 25;
+export const MODE_SHORT_BREAK_DEFAULT_MINUTES = 5;
+export const MODE_LONG_BREAK_DEFAULT_MINUTES = 15;
 export const DEFAULT_SETTINGS: ISettings = {
-  pomodoroMinutes: 25,
-  shortBreakMinutes: 5,
-  longBreakMinutes: 15,
+  pomodoroMinutes: MODE_POMODORO_DEFAULT_MINUTES,
+  shortBreakMinutes: MODE_SHORT_BREAK_DEFAULT_MINUTES,
+  longBreakMinutes: MODE_LONG_BREAK_DEFAULT_MINUTES,
   soundId: 1,
-};
+}
 export const DEFAULT_STATUS: IStatus = {
   mode: 'pomodoro',
   started: false,
   running: false,
-  secondsLeft: MODE_POMODORO_SECONDS,
-  currentTaskId: null
+  finished: false,
+  secondsLeft: MODE_POMODORO_DEFAULT_MINUTES * 60,
+  currentTask: null
 };
 export const AVAILABLE_SOUNDS = [
   {

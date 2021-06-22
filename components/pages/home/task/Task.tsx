@@ -1,5 +1,5 @@
 import styles from './Task.module.scss';
-import {MODE_POMODORO_SECONDS} from '../../lib/constants';
+import {MODE_POMODORO_DEFAULT_SECONDS} from '../../../../lib/constants';
 
 interface Props {
   idx: number;
@@ -27,7 +27,7 @@ export default function Task ({idx, title, iterations, finished, onRemove, onFin
               })
             }
         </span>
-        <span className="align-middle text-muted small">({iterations * (MODE_POMODORO_SECONDS / 60)} min)</span>
+        <span className="align-middle text-muted small">({iterations * (MODE_POMODORO_DEFAULT_SECONDS / 60)} min)</span>
       </div>
       <div className="col-3 col-md-2 text-center">
         <div className="btn-group">
