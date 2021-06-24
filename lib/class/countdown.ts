@@ -15,9 +15,6 @@ export default class Countdown {
     this.state = state;
     this.settings = settings;
     this._eventEmitter = new EventTarget();
-    if (this.state.started && this.state.running) {
-      this.resume();
-    }
   }
 
   public start(): void {
@@ -47,13 +44,13 @@ export default class Countdown {
     this._playAlarm();
     setTimeout(() => {
       const nextMode = this.state.mode === 'pomodoro' ? 'shortBreak' : 'pomodoro';
-      this.setMode(nextMode);
+      this.reset(nextMode);
       this.start();
     }, 5000);
     this._notifyChange('FINISHED');
   }
 
-  public setMode(newMode: Countdown['state']['mode']): void {
+  public reset(newMode: Countdown['state']['mode']): void {
     let secondsLeft: number;
     switch (newMode) {
       case 'pomodoro':
@@ -71,13 +68,14 @@ export default class Countdown {
     this.state.started = false;
     this.state.running = false;
     this.state.finished = false;
+    clearInterval(this._interval);
     this._notifyChange('SET_MODE');
   }
 
   public setSettings(settings: ISettings) {
     this.settings = settings;
     if (!this.state.started) {
-      this.setMode(this.state.mode);
+      this.reset(this.state.mode);
     }
   }
 
