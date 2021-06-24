@@ -9,12 +9,20 @@ export default function Home() {
   const tasks = useSelector(getTasks);
   const settings = useSelector(getSettings);
   const countdown = useSelector(getCountdown);
+  let title;
+  if (!countdown.finished) {
+    const titleSlogan = countdown.mode === 'pomodoro' ? 'Time to work!' : 'Time for a break';
+    title = `${countdown.timeLeft} - ${titleSlogan}`;
+  } else {
+    title = `---- ${countdown.timeLeft} ----`
+  }
+  const favicon = countdown.mode === 'pomodoro' ? '/favicon-pomodoro.ico' : '/favicon-break.ico';
   return (
     <div>
       <Head>
-        <title>Pomodoro</title>
+        <title>{title}</title>
         <meta name="description" content="Embrace Pomodoro!" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={favicon} />
       </Head>
       <main className="container">
         <div className="row justify-content-center">

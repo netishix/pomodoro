@@ -42,27 +42,29 @@ export default function Tomato({countdown, settings}: Props) {
     <div>
       <div className="text-center mb-4">
         <div className="btn-group btn-group" role="group">
-          <button type="button" className={`btn btn-outline-primary shadow-none ${countdown.mode === 'pomodoro' ? 'active' : ''}`} onClick={() => reset('pomodoro')}>Pomodoro</button>
-          <button type="button" className={`btn btn-outline-success shadow-none ${countdown.mode === 'shortBreak' ? 'active' : ''}`} onClick={() => reset('shortBreak')}>Short Break</button>
-          <button type="button" className={`btn btn-outline-success shadow-none ${countdown.mode === 'longBreak' ? 'active' : ''}`} onClick={() => reset('longBreak')}>Long Break</button>
+          <button type="button" disabled={countdown.finished} className={`btn btn-outline-primary shadow-none ${countdown.mode === 'pomodoro' ? 'active' : ''}`} onClick={() => reset('pomodoro')}>Pomodoro</button>
+          <button type="button" disabled={countdown.finished} className={`btn btn-outline-success shadow-none ${countdown.mode === 'shortBreak' ? 'active' : ''}`} onClick={() => reset('shortBreak')}>Short Break</button>
+          <button type="button" disabled={countdown.finished} className={`btn btn-outline-success shadow-none ${countdown.mode === 'longBreak' ? 'active' : ''}`} onClick={() => reset('longBreak')}>Long Break</button>
         </div>
       </div>
-      <div className="position-relative animate__animated animate__bounce animate__repeat-2">
+      <div className={`position-relative ${!countdown.finished ? 'animate__animated animate__bounce animate__repeat-2' : 'animate__animated animate__swing animate__infinite'}`}>
         <img className={`img-fluid ${countdown.mode !== 'pomodoro' ? 'visually-hidden' : ''}`} src="/images/tomato.png" alt="tomato red"/>
         <img className={`img-fluid ${(countdown.mode !== 'shortBreak' && countdown.mode !== 'longBreak') ? 'visually-hidden' : ''}`} src="/images/tomato-green.png" alt="tomato green"/>
         <div id={styles.timer} className="animate__animated animate__fadeIn animate__delay-1s">
-          <span className="text-white">{countdownRef.current.getTimeLeft()}</span>
+          <span className="text-white">{countdown.timeLeft}</span>
         </div>
         <div id={styles.controllerBtn} className="animate__animated animate__fadeIn animate__delay-1s">
           {
-            !countdown.started ?
+            !countdown.finished ?
+              (!countdown.started ?
               <button className={`btn btn-light fw-bold ${countdown.mode === 'pomodoro' ? 'text-danger' : 'text-success'}`} onClick={() => countdownRef.current.start()}>
                 <i className="bi bi-play-fill me-2" />START</button> :
               countdown.running ?
                 <button className="btn btn-light text-info fw-bold" onClick={() => countdownRef.current.pause()}>
                   <i className="bi bi-pause-fill me-2" />Pause</button> :
                 <button className={`btn btn-light fw-bold ${countdown.mode === 'pomodoro' ? 'text-danger' : 'text-success'}`} onClick={() => countdownRef.current.resume()}>
-                  <i className="bi bi-play-fill me-2" />Resume</button>
+                  <i className="bi bi-play-fill me-2" />Resume</button>)
+              : null
           }
         </div>
       </div>
