@@ -3,7 +3,7 @@ import {useState} from "react";
 import { ITask } from "../../../../lib/types/models";
 import {Task, TaskForm} from "../../../index";
 import styles from "./TaskList.module.scss";
-import * as reducers from "../../../../lib/redux/slices/tasks";
+import * as reducers from "../../../../lib/redux/slices/pomodoro";
 
 interface Props {
   tasks: ITask[],

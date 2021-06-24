@@ -1,5 +1,5 @@
 import ISettings from "./settings.interface";
-import IStatus from "./status.interface";
+import ICountdown from "./countdown.interface";
 import ITask from "./task.interface";
 
-export type { ISettings, IStatus, ITask};
+export type { ISettings, ICountdown, ITask};
