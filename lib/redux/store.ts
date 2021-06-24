@@ -9,14 +9,10 @@ import {
   REGISTER
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import tasksReducer from './slices/tasks';
-import settingsReducer from './slices/settings';
-import statusReducer from './slices/status';
+import pomodoroReducer from './slices/pomodoro';
 
 const rootReducer = combineReducers({
-  tasks: tasksReducer,
-  settings: settingsReducer,
-  status: statusReducer,
+  pomodoro: pomodoroReducer,
 });
 
 const persistConfig = {

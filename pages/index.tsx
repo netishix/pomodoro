@@ -1,19 +1,14 @@
 import Head from 'next/head'
 import { Tomato, Settings } from "../components";
-import {useEffect, useState} from "react";
 import TaskList from "../components/pages/home/task-list/TaskList";
 import {useSelector} from "react-redux";
-import {getTasks} from "../lib/redux/slices/tasks";
-import {getSettings} from "../lib/redux/slices/settings";
-import {getStatus} from "../lib/redux/slices/status";
-
+import {getTasks, getSettings, getCountdown} from "../lib/redux/slices/pomodoro";
 
 export default function Home() {
 
   const tasks = useSelector(getTasks);
   const settings = useSelector(getSettings);
-  const status = useSelector(getStatus);
-
+  const countdown = useSelector(getCountdown);
   return (
     <div>
       <Head>
@@ -36,7 +31,7 @@ export default function Home() {
             </div>
           </div>
           <div className="col-11 order-0 col-md-9 order-lg-1 offset-lg-1 col-lg-5 offset-xxl-2 col-xl-4 mb-5">
-            <Tomato status={status} />
+            <Tomato countdown={countdown} settings={settings} />
           </div>
         </div>
       </main>

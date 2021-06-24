@@ -1,7 +1,7 @@
-import {IStatus, ISettings} from "./types/models";
+import {ISettings, ICountdown} from "./types/models";
 
-export const VERSION = 'v0.5.0';
-export const MODE_POMODORO_DEFAULT_MINUTES = 25;
+export const VERSION = 'v0.5.1';
+export const MODE_POMODORO_DEFAULT_MINUTES = 1;
 export const MODE_SHORT_BREAK_DEFAULT_MINUTES = 5;
 export const MODE_LONG_BREAK_DEFAULT_MINUTES = 15;
 export const DEFAULT_SETTINGS: ISettings = {
@@ -10,13 +10,12 @@ export const DEFAULT_SETTINGS: ISettings = {
   longBreakMinutes: MODE_LONG_BREAK_DEFAULT_MINUTES,
   soundId: 1,
 }
-export const DEFAULT_STATUS: IStatus = {
+export const DEFAULT_COUNTDOWN: ICountdown = {
   mode: 'pomodoro',
   started: false,
   running: false,
   finished: false,
   secondsLeft: MODE_POMODORO_DEFAULT_MINUTES * 60,
-  currentTask: null
 };
 export const AVAILABLE_SOUNDS = [
   {
