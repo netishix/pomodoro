@@ -23,9 +23,6 @@ const slice: Slice = createSlice({
     },
     changedSettings(state: SliceState, action: PayloadAction<ISettings>) {
       state.settings = action.payload;
-      if (!state.countdown.started) {
-        state.countdown.secondsLeft = getSecondsLeftForMode(state.countdown.mode, state.settings);
-      }
     },
     addedTask(state: SliceState, action: PayloadAction<ITask>) {
       const newTask = action.payload;
@@ -43,22 +40,6 @@ const slice: Slice = createSlice({
     },
   }
 });
-
-function getSecondsLeftForMode(mode: string, currentSettings: ISettings) {
-  let secondsLeft: number;
-  switch (mode) {
-    case 'pomodoro':
-      secondsLeft = currentSettings.pomodoroMinutes * 60;
-      break;
-    case 'shortBreak':
-      secondsLeft = currentSettings.shortBreakMinutes * 60;
-      break;
-    case 'longBreak':
-      secondsLeft = currentSettings.longBreakMinutes * 60;
-      break;
-  }
-  return secondsLeft!;
-}
 
 // Selectors
 export const getCountdown = (state: any): ICountdown => state.pomodoro.countdown;
