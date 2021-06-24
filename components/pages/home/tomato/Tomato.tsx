@@ -15,10 +15,13 @@ interface Props {
 export default function Tomato({countdown, settings}: Props) {
 
   const countdownInstance = new Countdown({...countdown}, {...settings});
-  const dispatch = useDispatch();
   const countdownRef = useRef(countdownInstance);
+  const dispatch = useDispatch();
   useEffect(() => {
-    countdownRef.current.on('changed', (e) => {
+    if (countdown.started && countdown.running) {
+      countdownRef.current.start();
+    }
+    countdownRef.current.on('changed', (e: CustomEvent) => {
       const countdownState = e.detail.data;
       dispatch(reducers.changedCountdown(countdownState));
     });
@@ -28,10 +31,10 @@ export default function Tomato({countdown, settings}: Props) {
     countdownRef.current.setSettings(settings);
   }, [settings]);
 
-  function setModeManually(mode: ICountdown['mode']) {
+  function reset(mode: ICountdown['mode']) {
     const confirmed = countdown.running ? confirm('The timer is still running. Are you sure you want to end this iteration?') : true;
     if (confirmed) {
-      countdownRef.current.setMode(mode);
+      countdownRef.current.reset(mode);
     }
   }
 
@@ -39,9 +42,9 @@ export default function Tomato({countdown, settings}: Props) {
     <div>
       <div className="text-center mb-4">
         <div className="btn-group btn-group" role="group">
-          <button type="button" className={`btn btn-outline-primary shadow-none ${countdown.mode === 'pomodoro' ? 'active' : ''}`} onClick={() => setModeManually('pomodoro')}>Pomodoro</button>
-          <button type="button" className={`btn btn-outline-success shadow-none ${countdown.mode === 'shortBreak' ? 'active' : ''}`} onClick={() => setModeManually('shortBreak')}>Short Break</button>
-          <button type="button" className={`btn btn-outline-success shadow-none ${countdown.mode === 'longBreak' ? 'active' : ''}`} onClick={() => setModeManually('longBreak')}>Long Break</button>
+          <button type="button" className={`btn btn-outline-primary shadow-none ${countdown.mode === 'pomodoro' ? 'active' : ''}`} onClick={() => reset('pomodoro')}>Pomodoro</button>
+          <button type="button" className={`btn btn-outline-success shadow-none ${countdown.mode === 'shortBreak' ? 'active' : ''}`} onClick={() => reset('shortBreak')}>Short Break</button>
+          <button type="button" className={`btn btn-outline-success shadow-none ${countdown.mode === 'longBreak' ? 'active' : ''}`} onClick={() => reset('longBreak')}>Long Break</button>
         </div>
       </div>
       <div className="position-relative animate__animated animate__bounce animate__repeat-2">
