@@ -15,6 +15,7 @@ export default class Countdown {
     this.state = state;
     this.settings = settings;
     this._eventEmitter = new EventTarget();
+    this._setTimeLeft();
   }
 
   public start(): void {
@@ -46,7 +47,7 @@ export default class Countdown {
       const nextMode = this.state.mode === 'pomodoro' ? 'shortBreak' : 'pomodoro';
       this.reset(nextMode);
       this.start();
-    }, 5000);
+    }, 8000);
     this._notifyChange('FINISHED');
   }
 
@@ -65,6 +66,7 @@ export default class Countdown {
     }
     this.state.mode = newMode;
     this.state.secondsLeft = secondsLeft;
+    this._setTimeLeft();
     this.state.started = false;
     this.state.running = false;
     this.state.finished = false;
@@ -79,9 +81,9 @@ export default class Countdown {
     }
   }
 
-  public getTimeLeft(): string {
+  private _setTimeLeft(): void {
     const duration = moment.utc(moment.duration(this.state.secondsLeft, "seconds").asMilliseconds());
-    return duration.format("HH:mm:ss");
+    this.state.timeLeft = duration.format("mm:ss");
   }
 
   public on(eventName: CountdownEvent, callback: ((event : CustomEvent) => void)) {
@@ -94,7 +96,8 @@ export default class Countdown {
     return setInterval(() => {
       if (this.state.secondsLeft >= 1) {
         this.state.secondsLeft -= 1;
-        this._notifyChange('SECOND_PASSED');
+        this._setTimeLeft();
+        this._notifyChange('UPDATED_TIME_LEFT');
       } else {
         this._finish();
       }
