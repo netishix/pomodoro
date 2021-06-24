@@ -3,7 +3,7 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {SettingsForm} from "../../../index";
 import { ISettings } from "../../../../lib/types/models";
-import * as reducers from "../../../../lib/redux/slices/settings";
+import * as reducers from "../../../../lib/redux/slices/pomodoro";
 
 interface Props {
   settings: ISettings,
@@ -15,7 +15,7 @@ export default function Settings({ settings } : Props) {
   const dispatch = useDispatch();
 
   function updateSettings(newSettings: ISettings) {
-    dispatch(reducers.settingsChange(newSettings));
+    dispatch(reducers.changedSettings(newSettings));
     setFormVisible(false);
   }
 
