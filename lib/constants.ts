@@ -1,6 +1,6 @@
 import {ISettings, ICountdown} from "./types/models";
 
-export const VERSION = 'v0.5.0';
+export const VERSION = 'v0.5.1';
 export const MODE_POMODORO_DEFAULT_MINUTES = 1;
 export const MODE_SHORT_BREAK_DEFAULT_MINUTES = 5;
 export const MODE_LONG_BREAK_DEFAULT_MINUTES = 15;
