@@ -1,7 +1,7 @@
 import {ISettings, ITask} from "./types/models";
 import {TaskFactory} from "./utils/TaskFactory";
 
-export const VERSION = 'v0.6.0';
+export const VERSION = 'v0.7.0';
 export const MAX_POMODOROS_PER_TASK = 5;
 export const DEFAULT_SETTINGS: ISettings = {
   time: {
