@@ -1,13 +1,31 @@
 
-.tomato {
+.tomato, .tomatoFinished {
+  position: relative;
   display: inline-block;
-  width: 25px;
-  height: 25px;
-  background: url('../../../../public/icons/tomato-filled.png') no-repeat;
+  width: 20px;
+  height: 20px;
+  background: url('../../../../public/icons/tomato-red.png') no-repeat;
   background-size: contain;
+}
+
+.tomatoFinished:after {
+  content: '/';
+  position: absolute;
+  bottom: -7px;
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  color: #424141;
+  font-style: italic;
+}
+
+.activeTask {
+  border-left: 3px solid #c42323;
+  background-color: rgba(234, 198, 198, 0.5);
 }
 
 .finishedTask {
   border-left: 3px solid #56aa56;
   background-color: #e5efe5;
 }
+

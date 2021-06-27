@@ -1,51 +1,67 @@
 import { v4 as uuidv4 } from 'uuid';
 import {ChangeEvent, FormEvent, useState} from "react";
 import styles from './TaskForm.module.scss';
-import {ITask} from "../../../../lib/types/models";
+import {IIteration, ITask} from "../../../../lib/types/models";
+import {MAX_POMODOROS_PER_TASK} from "../../../../lib/constants";
+import {IReduxStore} from "../../../../lib/types/redux/store.interface";
+import {getSettings, getTasks} from "../../../../lib/redux/slices/pomodoro/selectors";
+import {connect, ConnectedProps} from "react-redux";
+import {TaskFactory} from "../../../../lib/utils/TaskFactory";
+
+const mapStateToProps = (state: IReduxStore) => ({
+  settings: getSettings(state),
+  tasks: getTasks(state)
+});
+
+const connector = connect(mapStateToProps);
 
 interface State {
   isValid: boolean,
   errors: {[key: string]: string},
   value: {
     title: string,
-    iterations: number,
-    hoveredIterations: number,
+    pomodoros: number,
+    hoveredPomodoros: number,
   }
 }
 
-interface Props {
+interface Props extends ConnectedProps<typeof connector>{
   onSubmit: (task: ITask) => void;
   onCancelForm: () => void;
 }
 
-export default function TaskForm (props: Props) {
-  const { onSubmit, onCancelForm } = props;
+function TaskForm ({
+    settings,
+    tasks,
+    onSubmit,
+    onCancelForm
+  }: Props) {
 
-  const initialState = {
+  const initialState: State = {
     isValid: false,
     errors: {
       title: ''
     },
     value: {
       title: '',
-      iterations: 1,
-      hoveredIterations: 1,
+      pomodoros: 1,
+      hoveredPomodoros: 1,
     }
   };
-  const [form, setForm] = useState(initialState);
+  const [form, setForm] = useState<State>(initialState);
 
-  function updateHoveredIterations(total: number) {
-    const value = {...form.value, hoveredIterations: total };
+  function updateHoveredPomodoros(total: number) {
+    const value = {...form.value, hoveredPomodoros: total };
     setForm({...form, value});
   }
 
-  function selectIterations (total: number) {
-    const value = {...form.value, iterations: total };
+  function selectPomodoros (total: number) {
+    const value = {...form.value, pomodoros: total };
     setForm({...form, value});
   }
 
   function shouldFillTomato (hoveredValue: number) {
-    return ((form.value.iterations && form.value.iterations >= hoveredValue) || (hoveredValue <= form.value.hoveredIterations));
+    return ((form.value.pomodoros && form.value.pomodoros >= hoveredValue) || (hoveredValue <= form.value.hoveredPomodoros));
   }
 
   function handleValueChange(e: ChangeEvent<HTMLInputElement>) {
@@ -56,14 +72,13 @@ export default function TaskForm (props: Props) {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const { title, iterations } = form.value;
+    const { title, pomodoros } = form.value;
     if (title !== '') {
-      const newTask: ITask = {
-        id: uuidv4(),
+      const newTask = TaskFactory.create({
         title,
-        iterations,
-        finished: false,
-      };
+        pomodoros,
+        activated: tasks.length === 0
+      }, settings);
       // Reset form
       setForm(initialState);
       onSubmit(newTask);
@@ -83,11 +98,12 @@ export default function TaskForm (props: Props) {
           <div className="small text-danger">{form.errors.title}</div>
       </div>
       <div className="col-12 form-group mb-3">
-        <label className="text-muted mb-2">Estimated iterations ({form.value.iterations || form.value.hoveredIterations}):</label>
+        <label className="text-muted mb-2">Estimated pomodoros ({form.value.pomodoros || form.value.hoveredPomodoros}):</label>
         <div>
           {
-            [1,2,3,4,5].map((value) => {
-              return <i key={value} className={`${styles.tomato} ${shouldFillTomato(value) ? styles.filled : null} `} onMouseEnter={() => updateHoveredIterations(value)} onMouseLeave={() => updateHoveredIterations(1)} onClick={() => selectIterations(value)}/>;
+            Array.from(new Array(MAX_POMODOROS_PER_TASK), (i, idx) => idx + 1)
+              .map((value) => {
+              return <i key={value} className={`${styles.tomato} ${shouldFillTomato(value) ? styles.filled : null} `} onMouseEnter={() => updateHoveredPomodoros(value)} onMouseLeave={() => updateHoveredPomodoros(1)} onClick={() => selectPomodoros(value)}/>;
             })
           }
         </div>
@@ -100,3 +116,6 @@ export default function TaskForm (props: Props) {
   )
 
 }
+
+
+export default connector(TaskForm);

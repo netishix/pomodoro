@@ -1,21 +1,36 @@
 import styles from "./Settings.module.scss";
 import {useState} from "react";
-import {useDispatch} from "react-redux";
+import {connect, ConnectedProps, useDispatch} from "react-redux";
+import {Dispatch} from "@reduxjs/toolkit";
 import {SettingsForm} from "../../../index";
 import { ISettings } from "../../../../lib/types/models";
-import * as reducers from "../../../../lib/redux/slices/pomodoro";
+import * as reducers from "../../../../lib/redux/slices/pomodoro/slice";
+import {IReduxStore} from "../../../../lib/types/redux/store.interface";
+import {getSettings} from "../../../../lib/redux/slices/pomodoro/selectors";
+import {changedSettings} from "../../../../lib/redux/slices/pomodoro/slice";
 
-interface Props {
-  settings: ISettings,
-}
+const mapStateToProps = (state: IReduxStore) => ({
+  settings: getSettings(state)
+});
 
-export default function Settings({ settings } : Props) {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  changeSettings: (settings: ISettings) => dispatch(reducers.changedSettings(settings))
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+interface Props extends ConnectedProps<typeof connector>{}
+
+function Settings (
+  {
+    settings,
+    changeSettings
+  } : Props) {
 
   const [isFormVisible, setFormVisible] = useState(false);
-  const dispatch = useDispatch();
 
   function updateSettings(newSettings: ISettings) {
-    dispatch(reducers.changedSettings(newSettings));
+    changeSettings(newSettings);
     setFormVisible(false);
   }
 
@@ -35,3 +50,5 @@ export default function Settings({ settings } : Props) {
     </div>
   );
 }
+
+export default connector(Settings);

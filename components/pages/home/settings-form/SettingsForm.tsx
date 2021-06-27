@@ -21,17 +21,19 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
-      pomodoroMinutes: settings.pomodoroMinutes as unknown as string,
-      shortBreakMinutes: settings.shortBreakMinutes as unknown as string,
-      longBreakMinutes: settings.longBreakMinutes as unknown as string,
+      pomodoroMinutes: settings.time.pomodoro as unknown as string,
+      shortBreakMinutes: settings.time.shortBreak as unknown as string,
+      longBreakMinutes: settings.time.longBreak as unknown as string,
       soundId: settings.soundId as unknown as string,
     }
   });
   function submit(data: FormData) {
     const newSettings: ISettings = {
-      pomodoroMinutes: parseInt(data.pomodoroMinutes),
-      shortBreakMinutes: parseInt(data.shortBreakMinutes),
-      longBreakMinutes: parseInt(data.longBreakMinutes),
+      time: {
+        pomodoro: parseInt(data.pomodoroMinutes),
+        shortBreak: parseInt(data.shortBreakMinutes),
+        longBreak: parseInt(data.longBreakMinutes),
+      },
       soundId: parseInt(data.soundId),
     };
     onSubmit(newSettings);

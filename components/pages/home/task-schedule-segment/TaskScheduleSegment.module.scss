@@ -1,0 +1,53 @@
+$pomodoroColor: #c63535;
+$breakColor: #56aa56;
+
+#timeLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.segment {
+  position: relative;
+  display: inline-block;
+  border-width: 4px;
+  border-style: solid;
+}
+
+.segmentPomodoro {
+  border-color: $pomodoroColor;
+}
+
+.segmentBreak {
+  border-color: $breakColor;
+}
+
+.segmentDescription {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.segmentArrow {
+  position: absolute;
+  bottom: 0;
+}
+
+.firstIteration {
+  position: absolute;
+  bottom: -12px;
+  left: -8px;
+  color: $pomodoroColor;
+}
+
+.lastIteration {
+  position: absolute;
+  bottom: -4.5px;
+  right: -30px;
+  color: $breakColor;
+  font-size: 1.2rem;
+}
+
