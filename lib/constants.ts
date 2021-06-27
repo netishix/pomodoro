@@ -1,22 +1,19 @@
-import {ISettings, ICountdown} from "./types/models";
+import {ISettings, ITask} from "./types/models";
+import {TaskFactory} from "./utils/TaskFactory";
 
 export const VERSION = 'v0.6.0';
-export const MODE_POMODORO_DEFAULT_MINUTES = 25;
-export const MODE_SHORT_BREAK_DEFAULT_MINUTES = 5;
-export const MODE_LONG_BREAK_DEFAULT_MINUTES = 15;
+export const MAX_POMODOROS_PER_TASK = 5;
 export const DEFAULT_SETTINGS: ISettings = {
-  pomodoroMinutes: MODE_POMODORO_DEFAULT_MINUTES,
-  shortBreakMinutes: MODE_SHORT_BREAK_DEFAULT_MINUTES,
-  longBreakMinutes: MODE_LONG_BREAK_DEFAULT_MINUTES,
+  time: {
+    pomodoro: 25,
+    shortBreak: 5,
+    longBreak: 15,
+  },
   soundId: 1,
 }
-export const DEFAULT_COUNTDOWN: ICountdown = {
-  mode: 'pomodoro',
-  started: false,
-  running: false,
-  finished: false,
-  secondsLeft: MODE_POMODORO_DEFAULT_MINUTES * 60,
-};
+export const DEFAULT_TASKS: ITask[] = [
+  TaskFactory.create({title: 'Example: Design a new icon', pomodoros: 3, activated: true}, DEFAULT_SETTINGS)
+]
 export const AVAILABLE_SOUNDS = [
   {
     id: 1,

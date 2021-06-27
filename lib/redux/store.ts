@@ -9,7 +9,7 @@ import {
   REGISTER
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import pomodoroReducer from './slices/pomodoro';
+import pomodoroReducer from './slices/pomodoro/slice';
 
 const rootReducer = combineReducers({
   pomodoro: pomodoroReducer,
