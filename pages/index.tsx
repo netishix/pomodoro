@@ -1,22 +1,34 @@
 import Head from 'next/head'
-import { Tomato, Settings } from "../components";
-import TaskList from "../components/pages/home/task-list/TaskList";
-import {useSelector} from "react-redux";
-import {getTasks, getSettings, getCountdown} from "../lib/redux/slices/pomodoro";
+import { Tomato, Settings, TaskList, TaskSchedule } from "../components";
+import {connect, ConnectedProps, useSelector} from "react-redux";
+import {getActiveIteration, getActiveTask} from "../lib/redux/slices/pomodoro/selectors";
+import {IReduxStore} from "../lib/types/redux/store.interface";
+import formatTimeLeft from "../lib/utils/format-time-left";
+import Timer from "../components/pages/home/timer/Timer";
 
-export default function Home() {
+const mapStateToProps = (state: IReduxStore) => ({
+  activeTask: getActiveTask(state),
+  activeIteration: getActiveIteration(state)
+});
 
-  const tasks = useSelector(getTasks);
-  const settings = useSelector(getSettings);
-  const countdown = useSelector(getCountdown);
+const connector = connect(mapStateToProps);
+
+interface Props extends ConnectedProps<typeof connector> {}
+
+function Home({activeTask, activeIteration }: Props) {
   let title;
-  if (!countdown.finished) {
-    const titleSlogan = countdown.mode === 'pomodoro' ? 'Time to work!' : 'Time for a break';
-    title = `${countdown.timeLeft} - ${titleSlogan}`;
+  if (activeIteration) {
+    const timeLeft = formatTimeLeft(activeIteration.secondsLeft);
+    if (!activeIteration.finished) {
+      const titleSlogan = activeIteration.type === 'pomodoro' ? 'Time to work!' : 'Time for a break';
+      title = `${timeLeft} - ${titleSlogan}`;
+    } else {
+      title = `---- ${timeLeft} ----`
+    }
   } else {
-    title = `---- ${countdown.timeLeft} ----`
+    title = 'Pomodoro'
   }
-  const favicon = countdown.mode === 'pomodoro' ? '/favicon-pomodoro.ico' : '/favicon-break.ico';
+  const favicon = !activeIteration || (activeIteration && activeIteration.type) === 'pomodoro' ? '/favicon-pomodoro.ico' : '/favicon-break.ico';
   return (
     <div>
       <Head>
@@ -27,22 +39,33 @@ export default function Home() {
       <main className="container">
         <div className="row justify-content-center">
           <div className="col-11 order-1 col-md-11 order-lg-0 col-lg-6 col-xxl-6 mb-5">
-            <div className="row mb-3">
+            {
+              activeTask ?
+                <div className="row mb-5">
+                  <div className="col-12">
+                    <TaskSchedule task={activeTask} />
+                  </div>
+                </div>
+                : null
+            }
+            <div className="row mb-4">
               <div className="col-12">
-                <Settings settings={settings}/>
+                <TaskList/>
               </div>
             </div>
             <div className="row">
               <div className="col-12">
-                <TaskList tasks={tasks}/>
+                <Settings/>
               </div>
             </div>
           </div>
           <div className="col-11 order-0 col-md-9 order-lg-1 offset-lg-1 col-lg-5 offset-xxl-2 col-xl-4 mb-5">
-            <Tomato countdown={countdown} settings={settings} />
+            <Timer/>
           </div>
         </div>
       </main>
     </div>
   )
 }
+
+export default connector(Home);

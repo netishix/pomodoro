@@ -1,33 +1,43 @@
-import { useDispatch } from "react-redux";
-import {useState} from "react";
+import {connect, ConnectedProps, useDispatch} from "react-redux";
+import { useState } from "react";
+import {Dispatch} from "@reduxjs/toolkit";
 import { ITask } from "../../../../lib/types/models";
 import {Task, TaskForm} from "../../../index";
 import styles from "./TaskList.module.scss";
-import * as reducers from "../../../../lib/redux/slices/pomodoro";
+import * as reducers from "../../../../lib/redux/slices/pomodoro/slice";
+import {getTasks} from "../../../../lib/redux/slices/pomodoro/selectors";
+import {IReduxStore} from "../../../../lib/types/redux/store.interface";
 
-interface Props {
-  tasks: ITask[],
-}
+const mapStateToProps = (state: IReduxStore) => ({
+  tasks: getTasks(state)
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  addTask: (task: ITask) => dispatch(reducers.addedTask(task)),
+  activateTask: (taskId: string) => dispatch(reducers.activatedTask(taskId)),
+  toggleFinishedTask: (taskId: string) => dispatch(reducers.toggledFinishedTask(taskId)),
+  removeTask: (taskId: string) => dispatch(reducers.removedTask(taskId))
+});
 
-export default function TaskList ({ tasks }: Props) {
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+interface Props extends ConnectedProps<typeof connector>{}
+
+function TaskList (
+  {
+    tasks,
+    addTask,
+    activateTask,
+    toggleFinishedTask,
+    removeTask
+  } : Props) {
 
   const [isFormVisible, setFormVisible] = useState(false);
 
-  const dispatch = useDispatch();
-
-  function addTask(task: ITask) {
-    dispatch(reducers.addedTask(task));
-  }
-
-  function removeTask (taskId: string) {
+  function confirmTaskRemoval (taskId: string) {
     const confirmed = confirm('Are you sure you want to remove this task?');
     if (confirmed) {
-      dispatch(reducers.removedTask(taskId));
+      removeTask(taskId);
     }
-  }
-
-  function toggleTaskStatus (taskId: string) {
-    dispatch(reducers.toggledTaskStatus(taskId));
   }
 
   return (
@@ -40,7 +50,7 @@ export default function TaskList ({ tasks }: Props) {
           <div className="col-12">
             {
               tasks.length > 0 ?
-              tasks.map((task, idx) => <Task key={idx} {...task} idx={idx + 1} onFinish={() => toggleTaskStatus(task.id)} onRemove={() => removeTask(task.id)} />) :
+              tasks.map((task, idx) => <Task key={idx} task={task} idx={idx + 1} onActivate={() => activateTask(task.id)} onFinish={() => toggleFinishedTask(task.id)} onRemove={() => confirmTaskRemoval(task.id)}/>) :
                 <p className="text-center text-muted">You haven't added any tasks yet</p>
             }
           </div>
@@ -64,3 +74,5 @@ export default function TaskList ({ tasks }: Props) {
     </div>
   );
 }
+
+export default connector(TaskList);
