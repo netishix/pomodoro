@@ -45,7 +45,7 @@ export default function TaskScheduleSegment(
       {
         isLast ?
           <span className={styles.lastIteration}>
-            <i className="bi bi-flag-fill" />
+            <i className="bi bi-caret-right-fill" />
           </span>
           : null
       }

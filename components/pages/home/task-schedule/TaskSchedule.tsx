@@ -16,7 +16,7 @@ export default function TaskSchedule(
       <div className="col-12">
         <div className="row mb-4">
           <div className="col-12">
-            <h4 className="text-muted">
+            <h4 className="text-muted text-truncate">
               <span className="me-3"> Working on:</span>
               <span className="small fw-light">{task.title}</span>
             </h4>

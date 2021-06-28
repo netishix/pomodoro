@@ -46,6 +46,7 @@ const slice: Slice = createSlice({
       const targetTaskId = action.payload;
       const targetIdx = state.tasks.findIndex((task) => task.id === targetTaskId);
       const isFinished = state.tasks[targetIdx].finished;
+      state.tasks[targetIdx].finished = !state.tasks[targetIdx].finished;
       if (!isFinished) {
         state.tasks[targetIdx].finished = true;
         state.tasks[targetIdx].active = false;
@@ -73,10 +74,11 @@ const slice: Slice = createSlice({
       const currentTask = state.tasks[taskIdx];
       // Deactivate current iteration
       const currentIteration = currentTask.schedule[iterationIdx];
-      currentIteration.active = false;
       // Activate next iteration (could be for the same task or a different one)
       const wasLastIteration = iterationIdx === currentTask.schedule.length - 1;
       if (!wasLastIteration) {
+        // Deactivate current iteration
+        currentIteration.active = false;
         // Another iteration is available for the current task
         const nextIteration = currentTask.schedule[iterationIdx + 1];
         nextIteration.active = true;

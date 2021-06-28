@@ -69,7 +69,7 @@ function Timer (
 
     return (
       <div>
-        <div className={`position-relative ${!activeIteration.finished ? 'animate__animated animate__bounce animate__repeat-2' : 'animate__animated animate__swing animate__infinite'}`}>
+        <div className={`position-relative ${!activeIteration.finished ? 'animate__animated animate__bounce animate__repeat-2' : 'animate__animated animate__swing animate__repeat-3'}`}>
           <img className={`img-fluid ${activeIteration.type !== 'pomodoro' ? 'visually-hidden' : ''}`} src="/images/tomato.png" alt="tomato red"/>
           <img className={`img-fluid ${(activeIteration.type !== 'shortBreak' && activeIteration.type !== 'longBreak') ? 'visually-hidden' : ''}`} src="/images/tomato-green.png" alt="tomato green"/>
           <div id={styles.timer} className="animate__animated animate__fadeIn animate__delay-1s">
@@ -86,6 +86,12 @@ function Timer (
                       <i className="bi bi-pause-fill me-2" />Pause</button> :
                     <button className={`btn btn-light fw-bold ${activeIteration.type === 'pomodoro' ? 'text-danger' : 'text-success'}`} onClick={() => timeTrackerRef.current.resume()}>
                       <i className="bi bi-play-fill me-2" />Resume</button>)
+                : null
+            }
+            {
+
+              activeIteration.finished ?
+                <div id={styles.timeOutMessage} className="text-white">Time out!</div>
                 : null
             }
           </div>
