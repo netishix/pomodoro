@@ -59,7 +59,7 @@ function Home({activeTask, activeIteration }: Props) {
               </div>
             </div>
           </div>
-          <div className="col-11 order-0 col-md-9 order-lg-1 offset-lg-1 col-lg-5 offset-xxl-2 col-xl-4 mb-5">
+          <div className="col-10 order-0 col-md-9 order-lg-1 offset-lg-1 col-lg-5 offset-xxl-2 col-xl-4 mb-5">
             <Timer/>
           </div>
         </div>
