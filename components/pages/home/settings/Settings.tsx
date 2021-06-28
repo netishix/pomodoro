@@ -1,16 +1,16 @@
 import styles from "./Settings.module.scss";
 import {useState} from "react";
-import {connect, ConnectedProps, useDispatch} from "react-redux";
+import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "@reduxjs/toolkit";
 import {SettingsForm} from "../../../index";
 import { ISettings } from "../../../../lib/types/models";
 import * as reducers from "../../../../lib/redux/slices/pomodoro/slice";
 import {IReduxStore} from "../../../../lib/types/redux/store.interface";
-import {getSettings} from "../../../../lib/redux/slices/pomodoro/selectors";
-import {changedSettings} from "../../../../lib/redux/slices/pomodoro/slice";
+import {getSettings, getTasks} from "../../../../lib/redux/slices/pomodoro/selectors";
 
 const mapStateToProps = (state: IReduxStore) => ({
-  settings: getSettings(state)
+  settings: getSettings(state),
+  tasks: getTasks(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -24,14 +24,23 @@ interface Props extends ConnectedProps<typeof connector>{}
 function Settings (
   {
     settings,
+    tasks,
     changeSettings
   } : Props) {
 
   const [isFormVisible, setFormVisible] = useState(false);
 
   function updateSettings(newSettings: ISettings) {
-    changeSettings(newSettings);
-    setFormVisible(false);
+    let confirmation;
+    if (tasks.length > 0) {
+      confirmation = confirm('This changes will affect your current list of tasks. Do you want to continue?');
+    } else {
+      confirmation = true;
+    }
+    if (confirmation) {
+      changeSettings(newSettings);
+      setFormVisible(false);
+    }
   }
 
   return (

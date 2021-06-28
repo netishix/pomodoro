@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction, Slice } from '@reduxjs/toolkit'
+import {createSlice, current, PayloadAction, Slice} from '@reduxjs/toolkit'
 import {IIteration, ISettings, ITask} from '../../../types/models';
 import {DEFAULT_SETTINGS, DEFAULT_TASKS} from "../../../constants";
 import {IReduxStore} from "../../../types/redux/store.interface";
@@ -28,6 +28,16 @@ const slice: Slice = createSlice({
     },
     activatedTask(state: SliceState, action: PayloadAction<string>) {
       const targetTaskId = action.payload;
+      // Pause active iteration if any
+      let activeIteration;
+      const activeTask = state.tasks.find(task => task.active);
+      if (activeTask) {
+        activeIteration = activeTask.schedule.find((iteration) => iteration.active);
+        if (activeIteration) {
+          console.log('paused');
+          activeIteration.running = false;
+        }
+      }
       state.tasks.forEach((task) => {
         task.active = task.id === targetTaskId;
       });
@@ -52,24 +62,24 @@ const slice: Slice = createSlice({
     },
     updatedIteration(state: SliceState, action: PayloadAction<{iterationId: string; updatedIteration: IIteration}>) {
       const {iterationId, updatedIteration} = action.payload;
-      const {targetTaskIdx, targetIterationIdx} = findIterationIdxs(state, iterationId);
-      if (targetTaskIdx !== -1 && targetIterationIdx !== -1) {
-        state.tasks[targetTaskIdx].schedule[targetIterationIdx] = updatedIteration;
+      const {taskIdx, iterationIdx} = findIterationIdx(state, iterationId);
+      if (taskIdx !== -1 && iterationIdx !== -1) {
+        state.tasks[taskIdx].schedule[iterationIdx] = updatedIteration;
       }
     },
     finishedIteration(state: SliceState, action: PayloadAction<string>) {
       const iterationId = action.payload;
-      const {targetTaskIdx, targetIterationIdx} = findIterationIdxs(state, iterationId);
-      const currentTask = state.tasks[targetTaskIdx];
+      const {taskIdx, iterationIdx} = findIterationIdx(state, iterationId);
+      const currentTask = state.tasks[taskIdx];
       // Deactivate current iteration
-      const currentIteration = currentTask.schedule[targetIterationIdx];
+      const currentIteration = currentTask.schedule[iterationIdx];
       currentIteration.active = false;
       // Activate next iteration (could be for the same task or a different one)
       let nextIteration;
-      const wasLastIteration = targetIterationIdx === currentTask.schedule.length - 1;
+      const wasLastIteration = iterationIdx === currentTask.schedule.length - 1;
       if (!wasLastIteration) {
         // Another iteration is available for the current task
-        nextIteration = currentTask.schedule[targetIterationIdx + 1];
+        nextIteration = currentTask.schedule[iterationIdx + 1];
         nextIteration.active = true;
         // Autostart iteration
         nextIteration.started = true
@@ -85,18 +95,18 @@ const slice: Slice = createSlice({
 });
 
 // Util functions
-function findIterationIdxs(state: SliceState, iterationId: string): {targetIterationIdx: number; targetTaskIdx: number} {
-  let targetTaskIdx!: number;
-  let targetIterationIdx!: number;
-  state.tasks.forEach((task, taskIdx) => {
-    targetIterationIdx = task.schedule.findIndex((iteration) => {
-      return iteration.id === iterationId;
+function findIterationIdx(state: SliceState, iterationId: string): {taskIdx: number; iterationIdx: number} {
+  let taskIdx!: number;
+  let iterationIdx!: number;
+  state.tasks.forEach((task, idx1) => {
+    task.schedule.forEach((iteration, idx2) => {
+      if (iteration.id === iterationId) {
+        taskIdx = idx1;
+        iterationIdx = idx2;
+      }
     });
-    if (targetIterationIdx !== -1) {
-      targetTaskIdx = taskIdx;
-    }
   });
-  return {targetTaskIdx, targetIterationIdx};
+  return {taskIdx, iterationIdx};
 }
 
 // Reducers and actions
