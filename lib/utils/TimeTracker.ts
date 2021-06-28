@@ -37,7 +37,6 @@ export default class TimeTracker {
   private _finish(): void {
     this.state.finished = true;
     this.state.running = false;
-    this.state.started = false;
     clearInterval(this._interval);
     this._playAlarm();
     this._notifyChange('ALARM_SOUND');

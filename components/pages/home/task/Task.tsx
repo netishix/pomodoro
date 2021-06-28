@@ -34,12 +34,12 @@ export default function Task ({idx, task, onActivate, onFinish, onRemove, }: Pro
           {
             !task.finished ?
               <button className={`btn btn-outline-danger btn-sm shadow-none ${task.active ? 'active' : null}`} onClick={() => onActivate()} title="Work on this task">
-                <i className="bi bi-flag" />
+                <i className="bi bi-play-fill" />
               </button>
               : null
           }
           <button className={`btn btn-outline-success btn-sm shadow-none ${task.finished ? 'active' : null}`} onClick={() => onFinish()} title="Flag task as finished">
-            <i className="bi bi-check" />
+            <i className="bi bi-check-circle" />
           </button>
           <button className="btn btn-outline-secondary btn-sm shadow-none" onClick={() => onRemove()} title="Remove task">
             <i className="bi bi-trash" />

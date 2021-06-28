@@ -46,21 +46,24 @@ export class TaskFactory {
   }
 
   public static updateTaskBasedOnNewSettings(task: ITask, newSettings: ISettings): ITask {
-    task.schedule.forEach((iteration) => {
-      if (!iteration.started) {
-        iteration.totalMinutes = newSettings.time[iteration.type];
-        iteration.secondsLeft = newSettings.time[iteration.type] * 60;
-      }
-    });
-    const taskTotalMinutes = task.schedule
-      .reduce((a, b) => {
-        return a + newSettings.time[b.type];
-      }, 0);
-    task.schedule.forEach((iteration) => {
-      const percentage = iteration.totalMinutes * 100 / taskTotalMinutes;
-      iteration.percentageOfTask = percentage.toFixed(2);
-    });
-    task.totalMinutes = taskTotalMinutes;
+    const wasTaskStarted = task.schedule.find((i) => i.started)!!;
+    if (!wasTaskStarted && !task.finished) {
+      task.schedule.forEach((iteration) => {
+        if (!iteration.started) {
+          iteration.totalMinutes = newSettings.time[iteration.type];
+          iteration.secondsLeft = newSettings.time[iteration.type] * 60;
+        }
+      });
+      const taskTotalMinutes = task.schedule
+        .reduce((a, b) => {
+          return a + newSettings.time[b.type];
+        }, 0);
+      task.schedule.forEach((iteration) => {
+        const percentage = iteration.totalMinutes * 100 / taskTotalMinutes;
+        iteration.percentageOfTask = percentage.toFixed(2);
+      });
+      task.totalMinutes = taskTotalMinutes;
+    }
     return task;
   }
 

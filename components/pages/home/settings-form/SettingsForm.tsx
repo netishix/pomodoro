@@ -93,7 +93,7 @@ export default function SettingsForm({ settings, onSubmit, onCancel }: Props) {
           </div>
         </div>
         <div className="row form-group mb-3">
-          <div className="col-5 col-md-4">
+          <div className="col-7 col-md-4">
             <label className="small text-muted">Alarm sound:</label>
             <select className="form-select form-select-sm" {...register("soundId", { required: true })}>
               {

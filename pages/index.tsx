@@ -23,7 +23,7 @@ function Home({activeTask, activeIteration }: Props) {
       const titleSlogan = activeIteration.type === 'pomodoro' ? 'Time to work!' : 'Time for a break';
       title = `${timeLeft} - ${titleSlogan}`;
     } else {
-      title = `---- ${timeLeft} ----`
+      title = `Time out! - ${timeLeft} -`
     }
   } else {
     title = 'Pomodoro'
