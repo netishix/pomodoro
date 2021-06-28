@@ -16,17 +16,22 @@ export default function TaskScheduleSegment(
     isLast
   }: Props) {
 
-  function getArrowLeftPosition(): string {
+  function getCompletedPercentage(): number {
     // Calculate completed percentage
     const totalSeconds = iteration.totalMinutes * 60;
     const elapsedSeconds = totalSeconds - iteration.secondsLeft;
-    const completedPercentage = elapsedSeconds * 100 / totalSeconds;
+    return elapsedSeconds * 100 / totalSeconds;
+  }
+
+  function getArrowPosition(): string {
+    const completedPercentage = getCompletedPercentage();
     return `calc(${completedPercentage}% + ${DEFAULT_ARROW_LEFT_POSITION}`;
   }
 
   return (
     <div className={`${styles.segment} ${iteration.type === 'pomodoro' ? styles.segmentPomodoro : styles.segmentBreak}`}
          style={{width: `${iteration.percentageOfTask}%`}}>
+      <div className={styles.segmentInner} style={{width: `${getCompletedPercentage()}%`}}/>
       {
         isFirst ?
           <span className={styles.firstIteration}>
@@ -36,7 +41,7 @@ export default function TaskScheduleSegment(
       }
       {
         iteration.active ?
-          <div className={styles.segmentArrow} style={{left: getArrowLeftPosition()}}>
+          <div className={styles.segmentArrow} style={{left: getArrowPosition()}}>
             <i className="bi bi-caret-down-fill" />
           </div>
           : null
@@ -45,7 +50,7 @@ export default function TaskScheduleSegment(
       {
         isLast ?
           <span className={styles.lastIteration}>
-            <i className="bi bi-flag-fill" />
+            <i className="bi bi-caret-right-fill" />
           </span>
           : null
       }
