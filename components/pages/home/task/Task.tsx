@@ -15,7 +15,7 @@ export default function Task ({idx, task, onActivate, onFinish, onRemove, }: Pro
       <div className="col-1 col-lg-1 text-center">
         {idx}.
       </div>
-      <div className="col-8 col-lg-5 text-truncate">
+      <div className="col-7 col-lg-5 text-truncate">
         <span className="text-muted">{task.title}</span>
       </div>
       <div className="d-none d-lg-inline-block col-lg-3 text-truncate">
@@ -29,7 +29,7 @@ export default function Task ({idx, task, onActivate, onFinish, onRemove, }: Pro
             }
         </span>
       </div>
-      <div className="col-3 col-lg-3 text-end">
+      <div className="col-4 col-lg-3 text-end">
         <div className="btn-group">
           {
             !task.finished ?
