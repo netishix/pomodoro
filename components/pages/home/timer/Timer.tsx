@@ -43,7 +43,6 @@ function Timer (
     });
     const timeTrackerRef = useRef(timeTracker);
     useEffect(() => {
-      console.log('mounted');
       timeTrackerRef.current.on('changed', (e: CustomEvent) => {
         const {data, description} = e.detail;
         const updatedIteration = data as IIteration;

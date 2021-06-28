@@ -11,7 +11,8 @@ $breakColor: #56aa56;
 .segment {
   position: relative;
   display: inline-block;
-  border-width: 4px;
+  height: 10px;
+  border-width: 1px;
   border-style: solid;
 }
 
@@ -21,6 +22,20 @@ $breakColor: #56aa56;
 
 .segmentBreak {
   border-color: $breakColor;
+}
+
+.segment > .segmentInner {
+  position: absolute;
+  display: inline-block;
+  height: 100%;
+}
+
+.segment.segmentPomodoro .segmentInner {
+  background-color: $pomodoroColor;
+}
+
+.segment.segmentBreak .segmentInner {
+  background-color: $breakColor;
 }
 
 .segmentDescription {
@@ -33,21 +48,21 @@ $breakColor: #56aa56;
 
 .segmentArrow {
   position: absolute;
-  bottom: 0;
+  bottom: 2px;
   z-index: 2;
 }
 
 .firstIteration {
   position: absolute;
-  bottom: -12px;
+  bottom: -8px;
   left: -8px;
   color: $pomodoroColor;
 }
 
 .lastIteration {
   position: absolute;
-  bottom: -18px;
-  right: -20px;
+  bottom: -14px;
+  right: -15px;
   color: $pomodoroColor;
   font-size: 1.5rem;
 }

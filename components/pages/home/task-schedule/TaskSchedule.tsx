@@ -10,7 +10,7 @@ export default function TaskSchedule(
   {
     task,
   }: Props) {
-
+  console.log(task);
   return (
     <div className="row">
       <div className="col-12">
