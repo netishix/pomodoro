@@ -1,5 +1,3 @@
-// @ts-ignore
-import {Timer as EasyTimer} from 'easytimer.js/dist/easytimer.min.js';
 import {useEffect, useRef} from "react";
 import {connect, ConnectedProps} from "react-redux";
 import {Dispatch} from "@reduxjs/toolkit";
@@ -13,8 +11,7 @@ import {
   getActiveTask,
 } from "../../../../lib/redux/slices/pomodoro/selectors";
 import formatTimeLeft from "../../../../lib/utils/format-time-left";
-import {IIteration, ITask} from "../../../../lib/types/models";
-import {useComponentDidMount} from "../../../../lib/hooks/use-component-did-mount";
+import {IIteration} from "../../../../lib/types/models";
 
 const mapStateToProps = (state: IReduxStore) => ({
   soundFile: getSoundFile(state),
@@ -46,6 +43,7 @@ function Timer (
     });
     const timeTrackerRef = useRef(timeTracker);
     useEffect(() => {
+      console.log('mounted');
       timeTrackerRef.current.on('changed', (e: CustomEvent) => {
         const {data, description} = e.detail;
         const updatedIteration = data as IIteration;
@@ -60,6 +58,8 @@ function Timer (
       timeTrackerRef.current.state = {...activeIteration};
       if (activeIteration.started && activeIteration.running) {
         timeTrackerRef.current.resume();
+      } else {
+        timeTrackerRef.current.pause();
       }
     }, [activeIteration.totalMinutes, activeIteration.id]);
 
