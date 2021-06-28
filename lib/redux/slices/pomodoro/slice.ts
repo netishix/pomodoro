@@ -75,20 +75,24 @@ const slice: Slice = createSlice({
       const currentIteration = currentTask.schedule[iterationIdx];
       currentIteration.active = false;
       // Activate next iteration (could be for the same task or a different one)
-      let nextIteration;
       const wasLastIteration = iterationIdx === currentTask.schedule.length - 1;
       if (!wasLastIteration) {
         // Another iteration is available for the current task
-        nextIteration = currentTask.schedule[iterationIdx + 1];
+        const nextIteration = currentTask.schedule[iterationIdx + 1];
         nextIteration.active = true;
         // Autostart iteration
         nextIteration.started = true
         nextIteration.running = true;
       } else {
         // All iterations have been finished for the current task
-        // Deactivate current task and move to the following task
+        // Deactivate current task
         currentTask.finished = true;
         currentTask.active = false;
+        // Move to the following task
+        const nextTask = state.tasks[taskIdx + 1];
+        if (nextTask) {
+          nextTask.active = true;
+        }
       }
     }
   }
