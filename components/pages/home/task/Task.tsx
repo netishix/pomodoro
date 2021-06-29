@@ -28,6 +28,7 @@ export default function Task ({idx, task, onActivate, onFinish, onRemove, }: Pro
               })
             }
         </span>
+        <span className="align-middle small">{task.totalMinutes}min</span>
       </div>
       <div className="col-4 col-lg-3 text-end">
         <div className="btn-group">
