@@ -71,8 +71,15 @@ function Timer (
         <div className={`position-relative ${!activeIteration.finished ? 'animate__animated animate__bounce animate__repeat-2' : 'animate__animated animate__swing animate__repeat-3'}`}>
           <img className={`img-fluid ${activeIteration.type !== 'pomodoro' ? 'visually-hidden' : ''}`} src="/images/tomato.png" alt="tomato red"/>
           <img className={`img-fluid ${(activeIteration.type !== 'shortBreak' && activeIteration.type !== 'longBreak') ? 'visually-hidden' : ''}`} src="/images/tomato-green.png" alt="tomato green"/>
-          <div id={styles.timer} className="animate__animated animate__fadeIn animate__delay-1s">
-            <span className="text-white">{formatTimeLeft(activeIteration.secondsLeft)}</span>
+          <div id={styles.timerContent} className="animate__animated animate__fadeIn animate__delay-1s">
+            <div className={`${styles.timeLeft} mb-1`}>
+              {formatTimeLeft(activeIteration.secondsLeft)}
+            </div>
+            {
+              activeIteration.finished ?
+                <div className={styles.message}>Time out!</div>
+                : null
+            }
           </div>
           <div id={styles.controllerBtn} className="animate__animated animate__fadeIn animate__delay-1s">
             {
@@ -87,12 +94,6 @@ function Timer (
                       <i className="bi bi-play-fill me-2" />Resume</button>)
                 : null
             }
-            {
-
-              activeIteration.finished ?
-                <div id={styles.timeOutMessage} className="text-white">Time out!</div>
-                : null
-            }
           </div>
         </div>
       </div>
@@ -101,6 +102,9 @@ function Timer (
     return (
       <div className="position-relative animate__animated animate__bounce animate__repeat-2'">
         <img className="img-fluid" src="/images/tomato.png" alt="tomato red"/>
+        <div id={styles.timerContent} className="animate__animated animate__fadeIn animate__delay-1s">
+          <div className={`${styles.message} mt-5`}>Select or create a task</div>
+        </div>
       </div>
     );
   }
