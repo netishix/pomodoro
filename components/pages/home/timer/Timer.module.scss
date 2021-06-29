@@ -1,10 +1,19 @@
-#timer {
+#timerContent {
   display: block;
   position:absolute;
   width: 100%;
   top: 45%;
   text-align: center;
   font-size: 4rem;
+  color: #fff;
+}
+
+.timeLeft {
+  font-size: 4rem;
+}
+
+.message {
+  font-size: 2rem;
 }
 
 #controllerBtn {
@@ -14,10 +23,6 @@
   top: 65%;
   text-align: center;
   font-size: 4rem;
-}
-
-#timeOutMessage {
- font-size: 2rem;
 }
 
 
